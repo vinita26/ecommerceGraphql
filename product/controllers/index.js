@@ -1,67 +1,44 @@
-const User = require('../models');
-const jwt = require('jsonwebtoken');
-const createToken = async (user) => {
-    const {email, name} = user;
-    const token = await jwt.sign({email,name}, process.env.JWT_SECRET || 'secret_key');
-    return token;
-}
-const registerNewUser = async (req, res) => {
-    const {name, email, password, age} = req.body;
+const Product = require('../models');
+
+const registerProduct = async (req, res) => {
+    const {name, category, price} = req.body;
+    console.log("req.boby",req.body);
+    
     try {
+
        // mongoose model
-       const newUser = new User({
+       const newProduct = new Product({
            name,
-           email,
-           password,
-           age
+           category,
+           price
        })
-       const user = await newUser.save();
-       res.status(201).send(user);
+       const product = await newProduct.save();
+       res.status(201).send(product);
     } catch (e) {
-      console.error('---Error registering user ----',e);
-      res.status(500).send({message: 'Error registering new user'});
+      console.error('---Error registering product ----',e);
+      res.status(500).send({message: 'Error registering new product'});
     }
 }
 
-const loginUser = async (req,res) => {
-    const {email, password} = req.body;
+
+const fetchAllProducts = async (req,res) => {
     try {
-        const user = await User.findOne({email});
-        if (!user) {
-            res.status(401).send({message: 'Either User or password  is invalid'})
-        }
-        const match = await user.isValidPassword(password);
-        if (match) {
-            const token = await createToken(user);
-            res.status(200).send(token);
-        }else{
-            res.status(401).send({message: 'Either User or password  is invalid'})
-        }
-        
+        const products = await Product.find({});
+        res.status(200).send(products);
     } catch (e) {
-    console.error('---Error login user ----',e);
-      res.status(403).send({message: 'Invalid Login'});
+    console.error('---Error fetching products ----',e);
+      res.status(500).send({message: 'Error fetching product informations'});
     }
 }
 
-const fetchAllUsers = async (req,res) => {
-    try {
-        const users = await User.find({});
-        res.status(200).send(users);
-    } catch (e) {
-    console.error('---Error fetching users ----',e);
-      res.status(500).send({message: 'Error fetching user informations'});
-    }
-}
-
-const fetchUserById = async (req,res) => {
+const fetchProductById = async (req,res) => {
     const id = req.params.id;
 try {
-        const user = await User.findOne({_id: id});
-        res.status(200).send(user);
+        const product = await Product.findOne({_id: id});
+        res.status(200).send(product);
     } catch (e) {
-    console.error('---Error fetching users specific ----',e);
-      res.status(500).send({message: 'Error fetching specific user informations'});
+    console.error('---Error fetching products specific ----',e);
+      res.status(500).send({message: 'Error fetching specific product informations'});
     }
 }
-module.exports = {registerNewUser,loginUser,fetchAllUsers,fetchUserById};
+module.exports = {registerProduct,fetchAllProducts,fetchProductById};

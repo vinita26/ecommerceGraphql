@@ -1,10 +1,9 @@
 const express = require('express');
-const {registerNewUser,loginUser,fetchAllUsers,fetchUserById} = require('../controllers');
+const {registerProduct,fetchAllProducts,fetchProductById} = require('../controllers');
 const router = express.Router();
 
-router.post('/users', registerNewUser);
-router.post('/login', loginUser);
-router.get('/users', fetchAllUsers);
-router.get('/users/:id', fetchUserById);
+router.post('/products', registerProduct);
+router.get('/products', fetchAllProducts);
+router.get('/products/:id', fetchProductById);
 
 module.exports = router;

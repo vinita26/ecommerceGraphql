@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const CustomerSchema = new Schema({
     name: String,
     email: {type: String,required: true, unique: true},
-    address: Number,
+    address: String,
     password: String
 })
 
