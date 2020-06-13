@@ -19,7 +19,7 @@ const registerProduct = async (product) => {
 }
 
 
-const fetchProducts = async () => {
+const fetchAllProducts = async () => {
 try {
     const {data} = await instance.get('/products');
     return data;
@@ -29,6 +29,16 @@ console.error('---error fetching products--',e);
 }
 }
 
+const fetchProductById = async (id) => {
+    try {
+        const {data} = await instance.get('/products');
+        return data;
+    } catch (e) {
+    console.error('---error fetching products by ID--',e);
+          throw e;
+    }
+    }
 
 
-module.exports = {registerProduct, fetchProducts};
+
+module.exports = {registerProduct, fetchAllProducts};
