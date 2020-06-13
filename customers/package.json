@@ -1,5 +1,5 @@
 {
-  "name": "graphql-server",
+  "name": "customers",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,12 +11,11 @@
   "author": "arunstiwari@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "^2.14.4",
-    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "graphql": "^15.1.0",
-    "graphql-redis-subscriptions": "^2.2.1",
+    "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "redis": "^3.0.2"
+    "mongoose": "^5.9.18"
   }
 }

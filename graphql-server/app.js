@@ -3,7 +3,7 @@ const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 const jwt = require('jsonwebtoken');
 
-const getLoggedInUser = (req) => {
+const getLoggedInCustomer = (req) => {
     const token = req.headers['x-auth-token'];
     if (token) {
         try{
@@ -17,7 +17,7 @@ const server = new ApolloServer({
     typeDefs,
     resolvers,
     context: async ({req}) => ({
-        me: getLoggedInUser(req)
+        me: getLoggedInCustomer(req)
     })
 })
 

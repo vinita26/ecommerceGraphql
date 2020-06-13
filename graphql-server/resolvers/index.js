@@ -1,21 +1,21 @@
-const {registerUser, fetchUsers, login} = require('../users')
+const {registerCustomer, fetchCustomers, login} = require('../customers')
 const resolvers = {
     Query: {
-        users: (parent, args, context) => {
+        customers: (parent, args, context) => {
             const {me} = context;
             console.log('---me----',me);
             
-          const users =   fetchUsers();
-          return users;
+          const customers =   fetchCustomers();
+          return customers;
         }
     },
     Mutation: {
-        registerUser: async (parent, args) => {
-            const user = await registerUser(args.user);
-            return user;
+        registerCustomer: async (parent, args) => {
+            const customer = await registerCustomer(args.customer);
+            return customer;
         },
         login: async (parent, args) => {
-            const token = await login(args.user);
+            const token = await login(args.customer);
             return token;
         }
     },
