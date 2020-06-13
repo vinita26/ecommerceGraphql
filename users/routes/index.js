@@ -1,5 +1,5 @@
 const express = require('express');
-const {registerNewUser} = require('../controllers');
+const {registerNewUser,loginUser,fetchAllUsers,fetchUserById} = require('../controllers');
 const router = express.Router();
 
 router.post('/users', registerNewUser);
