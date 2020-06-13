@@ -1,34 +1,31 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
-    name: String,
-    email: {type: String,required: true, unique: true},
-    age: Number,
-    password: String
+
+const OrderProductSchema = new Schema({
+    productId: String,
+    quantity: Number,
+    price: Number
 })
 
-UserSchema.pre('save', async function(next){
-    const hashPassword = await bcrypt.hash(this.password, 10);
-    this.password = hashPassword;
-    next();
+const OrderSchema = new Schema({
+    customerId: Number,
+    totalOrderValue: Number,
+    shippingAddress: String,
+    paymentMethod: String,
+    productInfo: [OrderProductSchema]
 })
 
-UserSchema.methods.isValidPassword = async function(newPassword){
-    const match = await bcrypt.compare(newPassword, this.password);
-    return match;
-}
 
-UserSchema.virtual('id').get(function(){
+OrderSchema.virtual('id').get(function(){
     return this._id.toHexString();
 })
 
-UserSchema.set('toJSON', {
+OrderSchema.set('toJSON', {
     virtuals: true
 })
 
-const User = mongoose.model('users', UserSchema);
+const Order = mongoose.model('orders', OrderSchema);
 
-module.exports = User;
+module.exports = Order;
